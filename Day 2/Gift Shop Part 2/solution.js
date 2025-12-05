@@ -39,6 +39,30 @@ function isMadeOfDuplicateSequences(id) {
         }
     }
     return false;
+    // code but with divider logic commented out (wanted to try if it worked fine)
+    // const idStr = id.toString();
+    // const length = idStr.length;
+    // let divider = 1;
+    //
+    // while (divider <= length / 2) {
+    //     if (length % divider === 0) {
+    //         const sequence = idStr.slice(0, divider);
+    //         for (let i = divider; i < length; i += divider) {
+    //             const nextSequence = idStr.slice(i, i + divider);
+    //             if (sequence !== nextSequence) {
+    //                 break;
+    //             }
+    //             if (i + divider === length) {
+    //                 return true;
+    //             }
+    //         }
+    //         divider++;
+    //     }
+    //     else {
+    //         divider++;
+    //     }
+    // }
+    // return false;
 }
 
 const invalidIds = findInvalidIds(ranges);
