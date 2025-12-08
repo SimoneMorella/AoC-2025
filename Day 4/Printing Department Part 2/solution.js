@@ -5,12 +5,20 @@ const lines = data.split('\n');
 
 function findNumberOfPaperRolls(lines) {
     let totalRolls = 0;
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        for (let j = 0; j < line.length; j++) {
-            const isAPaperRoll = line[j] === '@';
-            if (isAPaperRoll && checkAdjacentCells(lines, i, j)) {
-                totalRolls += 1;
+    let lineChanged = true;
+    while (lineChanged) {
+        lineChanged = false;
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            for (let j = 0; j < line.length; j++) {
+                const isAPaperRoll = line[j] === '@';
+                if (isAPaperRoll && checkAdjacentCells(lines, i, j)) {
+                    totalRolls += 1;
+                    line = line.slice(0, j) + 'x' + line.slice(j + 1);
+                    lines[i] = line;
+                    lineChanged = true;
+                    break;
+                }
             }
         }
     }
