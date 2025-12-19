@@ -35,5 +35,6 @@ function operateOnColumns(columns) {
 
 
 const columns = parseInputInColumns(data);
+console.log(columns);
 const results = operateOnColumns(columns);
 console.log(results.reduce((a, b) => a + b, 0));
