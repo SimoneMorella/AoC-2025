@@ -3,8 +3,6 @@ import * as fs from "node:fs";
 const data = fs.readFileSync('data.txt', 'utf8');
 const grid = data.split('\n');
 
-console.log(grid);
-
 function countSplits(grid: string[]): number {
     let splits = 0;
     let activeCol = new Set<number>([grid[0].indexOf('S')]);
