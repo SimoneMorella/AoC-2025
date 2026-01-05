@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "lib": ["ES2015"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "rootDir": ".",
+    "outDir": "./dist",
+    "newLine": "lf"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "**/dist"]
+}
+
