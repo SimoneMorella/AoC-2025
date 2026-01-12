@@ -6,12 +6,12 @@ const points: number[][] = fs
     .split("\n")
     .map(line => line.split(",").map(Number));
 
+
 const n = points.length;
 
 const parent = Array.from({ length: n }, (_, i) => i);
 const componentSize = Array(n).fill(1);
-console.log(parent);
-console.log(componentSize);
+let componentsCount = n;
 
 function findRoot(index: number): number {
     if (parent[index] !== index) {
@@ -20,11 +20,11 @@ function findRoot(index: number): number {
     return parent[index];
 }
 
-function connectComponents(a: number, b: number): void {
+function connectComponents(a: number, b: number): boolean {
     let rootA = findRoot(a);
     let rootB = findRoot(b);
 
-    if (rootA === rootB) return;
+    if (rootA === rootB) return false;
 
     if (componentSize[rootA] < componentSize[rootB]) {
         [rootA, rootB] = [rootB, rootA];
@@ -32,6 +32,9 @@ function connectComponents(a: number, b: number): void {
 
     parent[rootB] = rootA;
     componentSize[rootA] += componentSize[rootB];
+    componentsCount--;
+
+    return true;
 }
 
 type DistancePair = [number, number, number];
@@ -57,37 +60,16 @@ function buildDistancePairs(): DistancePair[] {
     return pairs;
 }
 
-function collectComponentSizes(): number[] {
-    const sizes: number[] = [];
-
-    for (let i = 0; i < n; i++) {
-        if (findRoot(i) === i) {
-            sizes.push(componentSize[i]);
-        }
-    }
-
-    return sizes;
-}
-
 const distancePairs = buildDistancePairs();
 distancePairs.sort((a, b) => a[0] - b[0]);
 
-const connections = Math.min(1000, distancePairs.length);
+let result = 0;
 
-for (let i = 0; i < connections; i++) {
-    const [, a, b] = distancePairs[i];
-    connectComponents(a, b);
+for (const [, a, b] of distancePairs) {
+    if (connectComponents(a, b) && componentsCount === 1) {
+        result = points[a][0] * points[b][0];
+        break;
+    }
 }
-
-const componentSizes = collectComponentSizes();
-componentSizes.sort((a, b) => b - a);
-
-while (componentSizes.length < 3) {
-    componentSizes.push(1);
-}
-
-const result = componentSizes
-    .slice(0, 3)
-    .reduce((acc, size) => acc * size, 1);
 
 console.log(result);
